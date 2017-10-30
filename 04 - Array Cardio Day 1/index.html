@@ -27,18 +27,25 @@
       { first: 'Hanna', last: 'Hammarström', year: 1829, passed: 1909 }
     ];
 
-    const people = ['Beck, Glenn', 'Becker, Carl', 'Beckett, Samuel', 'Beddoes, Mick', 'Beecher, Henry', 'Beethoven, Ludwig', 'Begin, Menachem', 'Belloc, Hilaire', 'Bellow, Saul', 'Benchley, Robert', 'Benenson, Peter', 'Ben-Gurion, David', 'Benjamin, Walter', 'Benn, Tony', 'Bennington, Chester', 'Benson, Leana', 'Bent, Silas', 'Bentsen, Lloyd', 'Berger, Ric', 'Bergman, Ingmar', 'Berio, Luciano', 'Berle, Milton', 'Berlin, Irving', 'Berne, Eric', 'Bernhard, Sandra', 'Berra, Yogi', 'Berry, Halle', 'Berry, Wendell', 'Bethea, Erin', 'Bevan, Aneurin', 'Bevel, Ken', 'Biden, Joseph', 'Bierce, Ambrose', 'Biko, Steve', 'Billings, Josh', 'Biondo, Frank', 'Birrell, Augustine', 'Black Elk', 'Blair, Robert', 'Blair, Tony', 'Blake, William'];
+    const people = ['Beck, Glenn', 'Becker, Carl', 'Beckett, Samuel', 'Beddoes, Mick', 'Beecher, Henry', 'Beethoven, Ludwig', 'Begin, Menachem', 'Belloc, Hilaire', 'Bellow, Saul', 'Benchley, Robert', 'Benenson, Peter', 'Ben-Gurion, David', 'Benjamin, Walter', 'Benn, Tony', 'Bennington, Chester', 'Benson, Leana', 'Bent, Silas', 'Bentsen, Lloyd', 'Berger, Ric', 'Bergman, Ingmar', 'Berio, Luciano', 'Berle, Milton', 'Berlin, Irving', 'Berne, Eric', 'Bernhard, Sandra', 'Berra, Yogi', 'Berry, Halle', 'Berry, Wendell', 'Bethea, Erin', 'Bevan, Aneurin', 'Bevel, Ken', 'Biden, Joseph', 'Bierce, Ambrose', 'Biko, Steve', 'Billings, Josh', 'Biondo, Frank', 'Birrell, Augustine', 'Black, Elk', 'Blair, Robert', 'Blair, Tony', 'Blake, William'];
 
     // Array.prototype.filter()
     // 1. Filter the list of inventors for those who were born in the 1500's
-    const fifteen = inventors.filter(inventor => (inventor.year >= 1500 && inventor.year < 1600));
-
+    // const fifteen = inventors.filter(function(inv) {
+    //   if(inv.year >= 1500 && inv.year < 1600) {
+    //     return true;
+    //   }
+    // });
+    const fifteen = inventors.filter(inv => (inv.year >= 1500 && inv.year < 1600));
     console.table(fifteen);
+    // console.log(fifteen);
 
     // Array.prototype.map()
-    // 2. Give us an array of the inventor first and last names
-    const fullNames = inventors.map(inventor => `${inventor.first} ${inventor.last}`);
-    console.log(fullNames);
+    // 2. Give us an array of the inventors' first and last names
+    // const fullName = inventors.map(inventor => inventor.first + ' ' + inventor.last);
+    const fullName = inventors.map(inventor => `${inventor.first} ${inventor.last}`)
+    
+    console.log(fullName);
 
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
@@ -51,22 +58,26 @@
     // });
 
     const ordered = inventors.sort((a, b) => a.year > b.year ? 1 : -1);
+
     console.table(ordered);
 
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live?
-    const totalYears = inventors.reduce((total, inventor) => {
-      return total + (inventor.passed - inventor.year);
+    const totalYears = inventors.reduce((total, invent) => {
+      return total + (invent.passed - invent.year);
     }, 0);
 
     console.log(totalYears);
 
     // 5. Sort the inventors by years lived
     const oldest = inventors.sort(function(a, b) {
-      const lastInventor = a.passed - a.year;
-      const nextInventor = b.passed - b.year;
-      return lastInventor > nextInventor ? -1 : 1;
+      const first = a.passed - a.year;
+      const second = b.passed - b.year;
+      a.old = first;
+      b.old = second;
+      return first > second ? -1 : 1;
     });
+
     console.table(oldest);
 
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
@@ -81,20 +92,20 @@
     // 7. sort Exercise
     // Sort the people alphabetically by last name
     const alpha = people.sort((lastOne, nextOne) => {
-      const [aLast, aFirst] = lastOne.split(', ');
-      const [bLast, bFirst] = nextOne.split(', ');
-      return aLast > bLast ? 1 : -1;
+      var [last, first] = lastOne.split(', ');
+      var [last1, first1] = nextOne.split(', ');
+      return last > last1 ? 1 : -1;
     });
+
     console.log(alpha);
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
-    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck', 'pogostick'];
+    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van' ];
 
-    const transportation = data.reduce(function(obj, item) {
-      if (!obj[item]) {
+    var transportation = data.reduce((obj, item) => {
+      if (!obj[item])
         obj[item] = 0;
-      }
       obj[item]++;
       return obj;
     }, {});
